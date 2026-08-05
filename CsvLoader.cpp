@@ -25,7 +25,7 @@ std::vector<Quiz> load_questions(const std::string& filename) {
 	std::string line;
 
 	// ② 1行目（タイトル行・ヘッダー）を読み飛ばす
-	if (std::getline(file, line)) {
+	std::getline(file, line);
 
 		// ③ ファイルの最後まで1行ずつ読み込むループ
 		while (std::getline(file, line)) {
@@ -46,12 +46,12 @@ std::vector<Quiz> load_questions(const std::string& filename) {
 			// カンマ(,)ごとに文字列を区切って取り出す 
 			std::getline(ss, token, ',');id = std::stoi(token);    // 1列目: 問題番号 (文字列から数値へ変換)
 			std::getline(ss, text, ',');                           // 2列目：問題文
-			std::getline(ss, choiceA, ',');                        // 3列目：問題文
-			std::getline(ss, choiceB, ',');                        // 4列目：問題文
-			std::getline(ss, choiceC, ',');                        // 5列目：問題文
-			std::getline(ss, choiceD, ',');                        // 6列目：問題文
-			std::getline(ss, correct, ',');                        // 7列目：問題文
-			std::getline(ss, expl, ',');                           // 8列目：問題文
+			std::getline(ss, choiceA, ',');                        // 3列目：選択肢A
+			std::getline(ss, choiceB, ',');                        // 4列目：選択肢B
+			std::getline(ss, choiceC, ',');                        // 5列目：選択肢C
+			std::getline(ss, choiceD, ',');                        // 6列目：選択肢D
+			std::getline(ss, correct, ',');                        // 7列目：正答
+			std::getline(ss, expl, ',');                           // 8列目：解説
 
 			// 選択肢A〜Dを1つの配列にまとめる
 			std::vector<std::string>choices = { choiceA, choiceB, choiceC, choiceD };
@@ -61,12 +61,12 @@ std::vector<Quiz> load_questions(const std::string& filename) {
 
 			// 配列に追加
 			quiz_list.push_back(q);
-		} 
-	
+		}
+
 
 		// ④ ファイルを閉じる
 		file.close();
 
 		// ⑤ 30問入った配列を返す
 		return quiz_list;
-}
+	}

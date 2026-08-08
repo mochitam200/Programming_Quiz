@@ -2,10 +2,11 @@
 
 #include <iostream>   // std::cout, std::cin 用
 #include <vector>     // std::vector 用
-#include<string>      // 文字列用
+#include <string>      // 文字列用
 #include <algorithm>  // std::shuffle 用 (シャッフル)
 #include <random>     // std::mt19937 用 (乱数発生器)
 #include <numeric>    // std::iota 用 (0,1,2...の連番を作る)
+#include <limits>     // std::numeric_limits (Enter待ちで必要)
 
 #include "CsvLoader.h"// CSV読み込み機能
 
@@ -25,6 +26,8 @@ int main() {
 
 	// CSVファイルから全問題を読み込む
 	std::vector<Quiz> quiz_list = load_questions("quiz_list.csv");
+
+	
 
 	// 問題が読み込めなかった場合のエラーチェック
 	if (quiz_list.empty()) {
@@ -54,23 +57,23 @@ int main() {
 		int quiz_idx = indices[i];         // シャッフルされた問題番号を取り出す
 		Quiz current_quiz = quiz_list[quiz_idx]; // 出題するクイズカードを取得
 
-		cout << "\n----------------------------------------" << endl;	
+		cout << "\n--------------------------------------------------" << endl;	
 		cout << "【第" << (i + 1) << "問 / 全" << NUM_QUESTIONS << "問】" << endl;
 		cout << current_quiz.quiz_text << endl;
-		cout << "------------------------------------------" << endl;
+		cout << "--------------------------------------------------" << endl;
 
 		// クイズの選択肢を表示
 		cout << "A)" << current_quiz.choices[0] << endl;
 		cout << "B)" << current_quiz.choices[1] << endl;
 		cout << "C)" << current_quiz.choices[2] << endl;
 		cout << "D)" << current_quiz.choices[3] << endl;
-		cout << "------------------------------------------" << endl;
+		cout << "--------------------------------------------------" << endl;
 
 		std::string user_answer;
 	
 		// 回答の入力受付ループ（正しくA/B/C/Dが入力されるまで繰り返し）
 		while (true) {
-			cout << "回答を入力してください(A / B / C / D …Qで終了)：" ;
+			cout << "回答を入力してください(A/B/C/D ...Qで終了)：" ;
 			cin >> user_answer;
 
 			// 入力された文字をすべて大文字に変換 (例: "a" -> "A")
@@ -101,7 +104,16 @@ int main() {
 		}
 		// 解説の表示
 		cout << "【解説】" << current_quiz.explanation << endl;
+
+		// Enterキーの入力を待ってから次の問題へ
+		cout << "\n[enterキーを押して次へ...]";
+		//入力バッファの中に残っている余分な文字を、改行（\n）を含めてすべて読み飛ばしてクリアする
+		cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+		cin.get();
+	
 	}
+
+	
 
 	// 正答率の計算
 	int correct_rate = correct_count * 100 / NUM_QUESTIONS; // 整数でパーセント計算

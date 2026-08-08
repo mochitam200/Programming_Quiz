@@ -9,6 +9,19 @@
 #include "CsvLoader.h"
 #include "Quiz.h"
 
+
+// 文字列内の文字「\n」を本物の改行に変換
+std::string clean_text(std::string str) {
+	// 文字としての"\n"を本物の改行文字'\n'に置換する
+	size_t pos = 0;
+	while ((pos = str.find("\\n", pos)) != std::string::npos) {
+		str.replace(pos, 2, "\n");
+		pos += 1;
+	}
+	return str;
+}
+
+
 // CSVファイルを開いて、読み込む準備
 std::vector<Quiz> load_questions(const std::string& filename) {
 	std::vector<Quiz>quiz_list; // 結果を格納する配列
@@ -51,7 +64,12 @@ std::vector<Quiz> load_questions(const std::string& filename) {
 			std::getline(ss, choiceC, ',');                        // 5列目：選択肢C
 			std::getline(ss, choiceD, ',');                        // 6列目：選択肢D
 			std::getline(ss, correct, ',');                        // 7列目：正答
-			std::getline(ss, expl, ',');                           // 8列目：解説
+			std::getline(ss, expl);                           // 8列目：解説...',' をつけずに行の最後まで丸ごと読み込む
+
+
+			// clean_text関数を通して「\n」を改行
+			expl = clean_text(expl);
+
 
 			// 選択肢A〜Dを1つの配列にまとめる
 			std::vector<std::string>choices = { choiceA, choiceB, choiceC, choiceD };

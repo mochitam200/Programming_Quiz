@@ -25,7 +25,7 @@ int main() {
 	cout << "CSVファイルを読み込んでいます…\n" ;
 
 	// CSVファイルから全問題を読み込む
-	std::vector<Quiz> quiz_list = load_questions("quiz_list.csv");
+	std::vector<Quiz> quiz_list = load_questions("data/quiz_list.csv");
 
 	
 

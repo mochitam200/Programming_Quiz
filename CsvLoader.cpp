@@ -116,12 +116,12 @@ std::vector<Quiz> load_questions(const std::string& filename) {
 		}
 		// 数値に変換できない文字列だった場合std::invalid_argument というエラーを発生させる
 		// catch ブロックでエラーを横取りし、プログラムが突然クラッシュ（強制終了）するのを防ぐ
-		catch (const std::invalid_argument& e) {
+		catch (const std::invalid_argument&) {
 			// エラー発生時の動作、画面に「不正な数値が入っていた」旨のエラーメッセージを表示
 			std::cerr << "エラー：問題IDが数値ではありません('" << tokens[0] << "')" << std::endl;
 			continue; // 不正な行なのでこの処理をスキップして次の行へ
 		}
-		catch (const std::out_of_range& e) {
+		catch (const std::out_of_range&) {
 			// int型の範囲を超えた巨大な数字が入っていた場合
 			std::cerr << "エラー：問題IDが数値の範囲を超えています('" << tokens[0] << "')" << std::endl;
 			continue; // スキップ

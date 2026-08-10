@@ -59,7 +59,7 @@ Programming_Quiz_App/
 
 1. このリポジトリをクローンまたはダウンロードします。
    ```bash
-   git clone https://github.com/your-username/Programming_Quiz.git
+   git clone https://github.com/mochitam200/Programming_Quiz.git
    ```
 2. Visual Studio 2022 で `Programming_Quiz.slnx` または `Programming_Quiz.vcxproj` を開きます。
 3. ビルド構成を `Release` (または `Debug`) / `x64` に設定します。

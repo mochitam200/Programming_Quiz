@@ -31,24 +31,28 @@ CSVファイルからクイズデータを動的に読み込み、ランダム�
 | 項目 | 内容 |
 | :--- | :--- |
 | **言語** | C++ (C++17 以上推奨) |
-| **開発環境 / IDE** | Visual Studio 2022 (MSVC) |
+| **開発環境 / IDE** | Visual Studio 2026 (MSVC) |
 | **ビルドツール** | MSBuild / Visual Studio Solution |
 | **使用ライブラリ** | C++ 標準ライブラリ (STL)<br>・`<vector>` / `<string>` (データ構造)<br>・`<fstream>` / `<sstream>` (ファイル読み込み)<br>・`<random>` / `<algorithm>` (ランダムシャッフル)<br>・`<iostream>` / `<limits>` (I/O・入力バッファ管理) |
 
 ---
 
+## 🤝 開発パートナー
+* **AIパートナー**: Google Gemini,Antigravity
+  * コードレビュー、脆弱性・例外処理のチェック、リファクタリング提案、ドキュメント生成のパートナーとして活用しました。
+
+---
+
+
 ## 📁 フォルダ構成（Directory Structure）
 
 ```text
 Programming_Quiz_App/
- │
- ├─ QuizApp.exe          … クイズアプリの実行ファイル
- ├─ README.txt           … 本説明書ファイル（このファイル）
- ├─ LICENSE.txt          … MITライセンス
- │
- └─ data/
-     └─ quiz_list.csv    … クイズの問題データ（CSVファイル）
-
+├── QuizApp.exe        # 実行ファイル
+├─ README.txt           # 説明書ファイル
+├─ LICENSE.txt          # MITライセンス
+└── data/
+    └── quiz_list.csv  # クイズデータ（CSV形式）
 ```
 
 ---

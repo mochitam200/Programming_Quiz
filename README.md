@@ -41,9 +41,14 @@ CSVファイルからクイズデータを動的に読み込み、ランダム�
 
 ```text
 Programming_Quiz_App/
-├── QuizApp.exe        # 実行ファイル
-└── data/
-    └── quiz_list.csv  # クイズデータ（CSV形式）
+ │
+ ├─ QuizApp.exe          … クイズアプリの実行ファイル
+ ├─ README.txt           … 本説明書ファイル（このファイル）
+ ├─ LICENSE.txt          … MITライセンス
+ │
+ └─ data/
+     └─ quiz_list.csv    … クイズの問題データ（CSVファイル）
+
 ```
 
 ---

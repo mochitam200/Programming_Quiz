@@ -1,9 +1,11 @@
-﻿// CSVファイルを読み込む関数の宣言と処理
-
+﻿
 #pragma once
 
 #ifndef CSV_READER_H // もしCSV_READER_Hがまだ定義されていなければ
 #define CSV_READER_H // CSV_READER_H という目印（マクロ）を定義
+
+
+// CSVファイルを読み込む関数の宣言と処理
 
 
 #include<string>

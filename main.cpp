@@ -19,10 +19,10 @@ int main() {
 	// 定数の設定
 	const int NUM_QUESTIONS = 5; // 出題する問題数
 
-	cout << "========================================" << endl;
-	cout << "           C++基礎クイズアプリ          " << endl;
-	cout << "========================================" << endl;
-	cout << "CSVファイルを読み込んでいます…\n" << endl;
+	cout << "========================================\n" ;
+	cout << "           C++基礎クイズアプリ          \n" ;
+	cout << "========================================\n" ;
+	cout << "CSVファイルを読み込んでいます…\n" ;
 
 	// CSVファイルから全問題を読み込む
 	std::vector<Quiz> quiz_list = load_questions("quiz_list.csv");
@@ -55,26 +55,28 @@ int main() {
 	// 5問出題するメインループ
 	for (int i = 0;i < NUM_QUESTIONS; ++i) { //++i（前置インクリメント）一時的なコピーを作らず、自分自身を直接書き換えてそのまま返す
 		int quiz_idx = indices[i];         // シャッフルされた問題番号を取り出す
-		Quiz current_quiz = quiz_list[quiz_idx]; // 出題するクイズカードを取得
+		const auto& current_quiz = quiz_list[quiz_idx]; // 出題するクイズカードを取得、参照（const &）で受けることでコピーコストを 0 に
 
-		cout << "\n--------------------------------------------------" << endl;	
-		cout << "【第" << (i + 1) << "問 / 全" << NUM_QUESTIONS << "問】" << endl;
-		cout << current_quiz.quiz_text << endl;
-		cout << "--------------------------------------------------" << endl;
+		cout << "\n--------------------------------------------------\n";	
+		cout << "【第" << (i + 1) << "問 / 全" << NUM_QUESTIONS << "問】\n";
+		cout << current_quiz.get_text() << endl;
+		cout << "--------------------------------------------------\n";
 
 		// クイズの選択肢を表示
-		cout << "A)" << current_quiz.choices[0] << endl;
-		cout << "B)" << current_quiz.choices[1] << endl;
-		cout << "C)" << current_quiz.choices[2] << endl;
-		cout << "D)" << current_quiz.choices[3] << endl;
-		cout << "--------------------------------------------------" << endl;
+		cout << "A)" << current_quiz.get_choices()[0] << endl;
+		cout << "B)" << current_quiz.get_choices()[1] << endl;
+		cout << "C)" << current_quiz.get_choices()[2] << endl;
+		cout << "D)" << current_quiz.get_choices()[3] << endl;
+		cout << "--------------------------------------------------\n" << endl;
 
 		std::string user_answer;
 	
 		// 回答の入力受付ループ（正しくA/B/C/Dが入力されるまで繰り返し）
 		while (true) {
-			cout << "回答を入力してください(A/B/C/D ...Qで終了)：" ;
-			cin >> user_answer;
+			cout << "回答を入力してください(A/B/C/D+Enter ...Q+Enterで終了)：" << endl;
+
+			// ユーザー入力を1行丸ごと取得(改行\nまで読み込んでバッファをクリア)
+			std::getline(cin, user_answer);
 
 			// 入力された文字をすべて大文字に変換 (例: "a" -> "A")
 			for (auto& c : user_answer)c = std::toupper(c);
@@ -94,21 +96,19 @@ int main() {
 		}
 
 		// 正誤判定
-		if (user_answer == current_quiz.correct_choice) {
+		if (user_answer == current_quiz.get_correct_choice()) {
 			cout << "\n〇 正解！" << endl;
 			correct_count++; // 正解数を+1
 		}
 		else {
-			cout << "\n× 不正解…" << endl;
-			cout << "正しい答えは【" << current_quiz.correct_choice << "】です。" << endl;
+			cout << "\n× 不正解…\n" << endl;
+			cout << "正しい答えは【" << current_quiz.get_correct_choice() << "】です。\n";
 		}
 		// 解説の表示
-		cout << "【解説】" << current_quiz.explanation << endl;
+		cout << "【解説】" << current_quiz.get_explanation() << endl;
 
 		// Enterキーの入力を待ってから次の問題へ
-		cout << "\n[enterキーを押して次へ...]";
-		//入力バッファの中に残っている余分な文字を、改行（\n）を含めてすべて読み飛ばしてクリアする
-		cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+		cout << "\n[enterキーを押して次へ...]";		
 		cin.get();
 	
 	}
@@ -118,22 +118,22 @@ int main() {
 	// 正答率の計算
 	int correct_rate = correct_count * 100 / NUM_QUESTIONS; // 整数でパーセント計算
 
-	cout << "\n========================================" << endl;
-	cout << "                最終結果                " << endl;
-	cout << "========================================" << endl;
-	cout << "正解数" << correct_count << " / " << NUM_QUESTIONS << "問" << endl;
-	cout << "正答率" << correct_rate << "%" << endl;
-	cout << "----------------------------------------" << endl;
+	cout << "\n========================================\n";
+	cout << "                最終結果                \n" ;
+	cout << "========================================\n" ;
+	cout << "正解数" << correct_count << " / " << NUM_QUESTIONS << "問\n";
+	cout << "正答率" << correct_rate << "%\n";
+	cout << "----------------------------------------\n";
 
 	// スコアに応じた評価メッセージ
-	if (correct_count == 5) {
-		cout << "【全問正解！！素晴らしい！！完璧な理解度です！】" << endl;		
+	if (correct_rate == 100) {
+		cout << "【全問正解！！素晴らしい！！完璧な理解度です！】\n";		
 	}
-	else if (correct_count >= 3) {
-		cout<<"【よくできました！この調子で頑張りましょう！】" << endl;
+	else if (correct_rate >= 60) {
+		cout<<"【よくできました！この調子で頑張りましょう！】\n";
 	}
 	else {
-		cout << "【次はもっと頑張りましょう！復習すれば必ず解けるようになります！】" << endl;
+		cout << "【次はもっと頑張りましょう！復習すれば必ず解けるようになります！】\n";
 	}
 	cout << "========================================" << endl;
 	
